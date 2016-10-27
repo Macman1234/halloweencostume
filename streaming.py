@@ -10,11 +10,10 @@ import time
 
 # Todo:
 # add more hashtags
-# add serial communication
 # port to raspi
 
-demotaglist = {"imwithher","placeholder","placeholder2"}
-repubtaglist = {"makeamericagreatagain","placeholderasdf","placeholderfoobar"}
+demotaglist = {"imwithher","clintonfoundation","amerikkka","drumpf", "strongertogether"}
+repubtaglist = {"makeamericagreatagain","crookedhillary","votetrump","buildthewall","trumpforpresident"}
 
 class StdOutListener(StreamListener):
     """ A listener handles tweets that are received from the stream.
@@ -22,20 +21,48 @@ class StdOutListener(StreamListener):
 
     """
     def on_data(self, data):
-	j = json.loads(data)
-	for i in j["entities"]["hashtags"]:
-	    d = 0;
-	    r = 0;
-	    for tag in demotaglist:
-	        if i["text"].lower() == tag:
-		    d += 1
-	    for tag in repubtaglist:
-                if i["text"].lower() == tag:
+        j = json.loads(data)
+        d = 0
+        r = 0
+        i = 0
+        #print(j["entities"]["hashtags"])
+        #print(len(j["entities"]["hashtags"]))
+        while (i < len(j["entities"]["hashtags"])):
+            #print(j["entities"]["hashtags"][i-1])
+            i = i + 1
+            for tag in demotaglist:
+                if j["entities"]["hashtags"][i-1]["text"].lower() == tag:
+                    d += 1
+                    #print(j["entities"]["hashtags"][i-1]["text"].lower())
+            for tag in repubtaglist:
+                if j["entities"]["hashtags"][i-1]["text"].lower() == tag:
                     r += 1
-	    print("d: " + str(d))
-	    print("r: " + str(r))
-	#print()
-	return True
+                    #print(j["entities"]["hashtags"][i-1]["text"].lower())
+        if (d > r):
+            print("d")
+        elif (r > d):
+            print("r")
+        else:
+            print("n")
+        print("\n")
+        return True
+        #while (i < range(len(j["entities"]["hashtags"]))):
+        #    print(i)
+        #    print(j["entities"]["hashtags"][i])
+            #i += 1
+#            for tag in demotaglist:
+#                if i["text"].lower() == tag:
+#                    d += 1
+#                    print(i["text"].lower())
+#            for tag in repubtaglist:
+#                if i["text"].lower() == tag:
+#                    r += 1
+#                    print(i["text"].lower())
+
+#        print("d: " + str(d))
+#	    print("r: " + str(r))
+#	    print("\n")
+
 
     def on_error(self, status):
         print(status)
@@ -46,4 +73,4 @@ if __name__ == '__main__':
     auth.set_access_token(twitter_access_token, twitter_access_token_secret)
 
     stream = Stream(auth, l)
-    stream.filter(track=['#imwithher', '#makeamericagreatagain'])
+    stream.filter(track=['#imwithher', '#makeamericagreatagain', '#clintonfoundation', '#crookedhillary', '#amerikkka'])
