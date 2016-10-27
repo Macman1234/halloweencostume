@@ -90,3 +90,5 @@ if __name__ == '__main__':
 
         stream = Stream(auth, l)
         stream.filter(track=['#imwithher', '#makeamericagreatagain', '#clintonfoundation', '#crookedhillary', '#amerikkka'])
+    finally:
+        GPIO.cleanup()
