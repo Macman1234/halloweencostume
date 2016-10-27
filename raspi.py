@@ -14,8 +14,8 @@ DEBUG = True
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-BLUE_LED = 18
-RED_LED = 23
+BLUE_LED = 23
+RED_LED = 18
 GPIO.setup(BLUE_LED, GPIO.OUT)
 GPIO.setup(RED_LED, GPIO.OUT)
 
@@ -60,6 +60,9 @@ class StdOutListener(StreamListener):
             GPIO.output(BLUE_LED, True)
             GPIO.output(RED_LED, False)
         print("\n")
+        time.sleep(0.1)
+        GPIO.output(BLUE_LED, False)
+        GPIO.output(RED_LED, False)
         return True
         #while (i < range(len(j["entities"]["hashtags"]))):
         #    print(i)
